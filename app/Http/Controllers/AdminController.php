@@ -50,7 +50,7 @@ class AdminController extends Controller
 
             DB::commit();
 
-            dd('berhasil reset password');
+            
             return Inertia::location('/admin/dashboard');
         } catch (\Throwable $th) {
             DB::rollback();
