@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from '@inertiajs/react';
-import { useState } from 'react';
 import { Dialog } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 
@@ -9,12 +8,11 @@ function classNames(...classes) {
 }
 
 export default function Navbar({ user }) {
-    
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     return (
-        <header className="bg-white">
-            <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
+        <header className="fixed top-0 left-0 right-0 bg-white z-10 ">
+            <nav className="mx-auto flex max-w-7xl items-center justify-between p-3 lg:px-1" aria-label="Global">
                 <div className="flex lg:flex-1">
                     <Link href="/" className="-m-1.5 p-1.5">
                         <span className="sr-only">Your Company</span>
@@ -32,24 +30,40 @@ export default function Navbar({ user }) {
                     </button>
                 </div>
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                    <Link href="/tourism" className="px-5 text-sm font-semibold leading-6 text-gray-900 hover:text-gray-700 hover:text-orange-400">
+                    <Link href="/destinasi" className="px-5 text-sm font-semibold leading-6 text-gray-900 hover:text-gray-700 hover:text-orange-400">
                         Tourism
                     </Link>
                     <Link href="/hotel" className="px-5 text-sm font-semibold leading-6 text-gray-900 hover:text-gray-700 hover:text-orange-400">
                         Hotel
                     </Link>
-                    <div className='px-5'>
+                    <div className="px-5">
+                        {user ? (
+                            <Link href={`/profile/${user.id}`} className="px-5 text-sm font-semibold leading-6 text-white bg-blue-900 hover:bg-blue-800 p-2 rounded-md">
+                                Profile
+                            </Link>
 
-                    {user ? (
+                        ) : (
+                            <Link href="/login" className="px-5 py-2 text-sm font-semibold leading-6 text-white bg-blue-900 hover:bg-blue-800 p-2 rounded-md">
+                                Log in
+                            </Link>
+                        )}
+
+                       
+                    </div>
+
+                    <div className="px-5">
                         
-                        <Link href={`/profile/${user.id}`} className="px-5 text-sm font-semibold leading-6 text-white bg-blue-900 hover:bg-blue-800 p-2 rounded-md">
-                            Profile
-                        </Link>
-                    ) : (
-                        <Link href="/login" className="px-5 text-sm font-semibold leading-6 text-white bg-blue-900 hover:bg-blue-800 p-2 rounded-md">
-                            Log in
-                        </Link>
-                    )}
+
+                        {user ? (
+                            <Link href={`/logout`} className="px-5 text-sm font-semibold leading-6 text-white bg-red-900 hover:bg-red-800 p-2 rounded-md">
+                                Logout
+                            </Link>
+
+                        ) : (
+                            <Link >
+                                
+                            </Link>
+                        )}
                     </div>
                 </div>
             </nav>

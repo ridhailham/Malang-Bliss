@@ -7,10 +7,12 @@ use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminWisataController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\HotelController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\User;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WisataController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
@@ -20,21 +22,19 @@ use Inertia\Inertia;
 
 
 
-Route::get('/about', function () {
-    return Inertia::render('About');
-});
-
 Route::get('/', function () {
     return Redirect::to('/home');
 });
 
 Route::prefix('/')->group(function () {
-
+    
     Route::get('/home', [HomeController::class, 'index'])->name('account.index');
+    Route::get('/hotel', [HotelController::class, 'index']);
+    Route::get('/destinasi', [WisataController::class, 'index']);
     
     Route::middleware('user.guest')->group(function () {
-
-
+        
+        
         Route::get('/login', [LoginController::class, 'index'])->name('account.login');
         Route::post('/authenticate', [LoginController::class, 'authenticate'])->name('account.authenticate');
 

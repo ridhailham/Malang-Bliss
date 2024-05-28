@@ -1,42 +1,18 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import React, { useState, useEffect } from 'react';
-import { Link, usePage } from '@inertiajs/inertia-react';
-import { Inertia } from '@inertiajs/inertia';
+import React from 'react';
 import Navbar from '../components/Navbar';
+import Hero from '../components/Hero';
+import WisataCardHorizontal from '../components/WisataCardHorizontal';
+import HotelCardHorizontal from '../components/HotelCardHorizontal';
 
-const Home = ({ user }) => {
+const Home = ({ user, wisata, hotel }) => {
   
   return (
     <>
-    <Navbar user={user}/>
-      <div>
-        <h1>Selamat Datang, {user ? user.name : 'Pengunjung'}</h1>
-        {/* Tampilkan informasi pengguna jika sudah terautentikasi */}
-        {user && (
-          <div>
-            <p>Email: {user.email}</p>
-            {/* Tambahkan info pengguna lainnya sesuai kebutuhan */}
-          </div>
-        )}
-      </div>
+      <Navbar user={user} />
+      <Hero user={user} />
+      <br />
+      <WisataCardHorizontal wisata={wisata} />
+      <HotelCardHorizontal hotel={hotel}/>
     </>
   );
 };
