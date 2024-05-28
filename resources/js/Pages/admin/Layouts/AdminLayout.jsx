@@ -17,7 +17,7 @@ const AdminLayout = ({ children }) => {
             </div>
             <div className="flex">
                 <Sidebar>
-                    <Link href="/admin/dashboard" className="no-underline" onClick={handleClick}>
+                    <Link href="/admin/home" className="no-underline" onClick={handleClick}>
                         <SidebarItem icon={<LayoutDashboard size={20} />} text="Dashboard" />
                     </Link>
                     <Link href="/admin/user" className="no-underline" onClick={handleClick}>
@@ -36,8 +36,8 @@ const AdminLayout = ({ children }) => {
                     <Link href="/admin/reset" className="no-underline" onClick={handleClick}>
                         <SidebarItem icon={<Settings size={20} />} text="Settings" />
                     </Link>
-                    <Link href="/help" className="no-underline" onClick={handleClick}>
-                        <SidebarItem icon={<LifeBuoy size={20} />} text="Help" />
+                    <Link href="/admin/logout" className="no-underline" onClick={handleClick}>
+                        <SidebarItem icon={<LifeBuoy size={20} />} text="Logout" />
                     </Link>
                 </Sidebar>
                 <div className="flex-grow">

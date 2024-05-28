@@ -15,6 +15,19 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             HandleInertiaRequests::class,
         ]);
+        
+        $middleware->alias([
+            'admin.guest' => \App\Http\Middleware\AdminRedirectAuthenticate::class,
+            'admin.auth' => \App\Http\Middleware\AdminAuthenticate::class,
+
+            'user.guest' => \App\Http\Middleware\UserRedirectAuthenticate::class,
+            'user.auth' => \App\Http\Middleware\UserAuthenticate::class
+        ]);
+
+        $middleware->redirectTo(
+            guests: '/login',
+            users: '/home'    
+        );
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

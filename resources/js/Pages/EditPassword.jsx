@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Inertia } from '@inertiajs/inertia';
 import { Link, usePage } from '@inertiajs/react';
 
-const Edituser = ({ id, user }) => {
+const EditPassword = ({ id, user }) => {
   const [tname, setTname] = useState(user.name);
   const [tpassword, setTpassword] = useState('');
   const [tpasswordConfirmation, setTpasswordConfirmation] = useState('');
@@ -16,10 +16,10 @@ const Edituser = ({ id, user }) => {
     setLoading(true);
     setSubmissionError(null);
 
-    const userData = { name: tname, password: tpassword, password_confirmation: tpasswordConfirmation };
+    const userData = { password: tpassword, password_confirmation: tpasswordConfirmation };
 
     
-    Inertia.post(`/admin/user/${id}`, userData, {
+    Inertia.post(`/updatepassword/${user.id}`, userData, {
       onFinish: () => setLoading(false),
       onError: () => {
         setSubmissionError('Data gagal ditambahkan. Silakan coba lagi.');
@@ -29,29 +29,14 @@ const Edituser = ({ id, user }) => {
 
   return (
     <div className="px-12 max-w-5xl mx-auto bg-white rounded-lg pt-12 mt-6">
-      <h3 className="text-2xl font-semibold mb-4">Form Edit User</h3>
+      <h3 className="text-2xl font-semibold mb-4">Ganti Password</h3>
       <hr className="mb-4" />
-      <Link as="button" type="button" href="/admin/user" className="bg-blue-500 text-white px-3 py-1 rounded mb-4 hover:bg-blue-700">
-        <h2>Kembali</h2>
-      </Link>
+      
       {submissionError && <div style={{ color: 'red', fontStyle: 'italic' }}>{submissionError}</div>}
       <form onSubmit={saveData}>
         <table className="w-full">
           <tbody>
-            <tr className="mb-4">
-              <td className="py-4 pr-4">Nama:</td>
-              <td>
-                <input
-                  type="text"
-                  value={tname}
-                  onChange={(e) => setTname(e.target.value)}
-                  placeholder="Masukkan nama"
-                  className="border border-gray-300 rounded p-2 w-full"
-                  required
-                />
-                {errors.name && <div style={{ color: 'red', fontStyle: 'italic' }}>{errors.name}</div>}
-              </td>
-            </tr>
+
             <tr className="mb-4">
               <td className="py-4 pr-4">Password Baru:</td>
               <td>
@@ -82,7 +67,7 @@ const Edituser = ({ id, user }) => {
             </tr>
             <tr>
               <td colSpan="2">
-                <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded mt-4 mb-2 hover:bg-blue-700">
+                <button type="submit" className="bg-blue-900 hover:bg-blue-700  text-white px-4 py-2 rounded mt-4 mb-2 ">
                   {loading ? 'Tunggu...' : 'Simpan Data'}
                 </button>
               </td>
@@ -94,4 +79,4 @@ const Edituser = ({ id, user }) => {
   );
 };
 
-export default Edituser;
+export default EditPassword;

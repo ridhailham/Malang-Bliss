@@ -16,10 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::all();
-        return Inertia::render('admin/user/AllUser', [
-            'user' => $user
-        ]);
+        //
     }
 
     /**
@@ -27,7 +24,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return Inertia::render('admin/user/AddUser');
+        //
     }
 
     /**
@@ -35,39 +32,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        // Validasi request
-        $valid = $request->validate([
-            'temail' => 'required',
-            'tname' => 'required|max:255',
-            'tpassword' => 'required|confirmed',
-
-        ]);
-
-
-
-        try {
-            DB::beginTransaction();
-
-            $user = new User();
-            $user->name = $valid['tname'];
-            $user->email = $valid['temail'];
-            $user->password = Hash::make($valid['tpassword']);
-            $user->role = 'user';
-
-            $user->save();
-
-
-
-            Cache::forget('users');
-
-            DB::commit();
-
-            return Inertia::location('/admin/user');
-        } catch (\Throwable $th) {
-            DB::rollback();
-            logger()->error('Error occurred while adding labs: ' . $th->getMessage());
-            return redirect()->back()->withErrors('error', 'Data gagal ditambahkan');
-        }
+        //
     }
 
     /**
@@ -75,37 +40,101 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
+        $user = User::findOrFail($id);
+
+        
+        return Inertia::render('Profile', [
+            'user' => $user
+        ]);
     }
 
-    /** 
+    /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        $user = User::find($id);
+        
+    }
 
-        return Inertia::render('admin/user/EditUser', [
-            'id' => $id,
+    public function editNama(string $id)
+    {
+        $user = User::findOrFail($id);
+
+        return Inertia::render('EditNama', [
             'user' => $user
         ]);
     }
+
+    public function editPassword(string $id)
+    {
+        $user = User::findOrFail($id);
+
+        return Inertia::render('EditPassword', [
+            'user' => $user
+        ]);
+    }
+
+    public function showRiwayatOrder(string $id)
+    {
+        $user = User::findOrFail($id);
+        
+        return Inertia::render('RiwayatOrder', [
+            'user' => $user
+        ]);
+    }
+
+   
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
+        //
+    }
+
+    public function updateNama(Request $request, string $id)
+    {
         // Validate request
         $valid = $request->validate([
             'name' => 'required|max:255',
-            'password' => 'sometimes|confirmed',
+            
+        ]);
+
+        try {
+            DB::beginTransaction();
+            
+            $user = User::findOrFail($id);
+            $user->name = $valid['name'];
+
+            $user->save();
+
+            Cache::forget('users');
+
+            DB::commit();
+
+            return Inertia::location('/profile/'.$user->id);
+        } catch (\Throwable $th) {
+            
+            DB::rollback();
+            logger()->error('Error occurred while updating user: ' . $th->getMessage());
+            return redirect()->back()->withErrors(['error' => 'Data gagal ditambahkan']);
+        }
+    }
+
+    public function updatePassword(Request $request, string $id)
+    {
+        // Validate request
+        $valid = $request->validate([
+            
+            'password' => 'required|confirmed',
         ]);
 
         try {
             DB::beginTransaction();
 
             $user = User::findOrFail($id);
-            $user->name = $valid['name'];
+            
 
             if (!empty($valid['password'])) {
                 $user->password = Hash::make($valid['password']);
@@ -117,60 +146,20 @@ class UserController extends Controller
 
             DB::commit();
 
-            return Inertia::location('/admin/user');
+            return Inertia::location('/profile/'.$user->id);
         } catch (\Throwable $th) {
+            dd($th);
             DB::rollback();
             logger()->error('Error occurred while updating user: ' . $th->getMessage());
             return redirect()->back()->withErrors(['error' => 'Data gagal ditambahkan']);
         }
     }
 
-
-
-    //     /**
-    //      * Remove the specified resource from storage.
-    //      */
-
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy(string $id)
     {
-        try {
-
-            DB::beginTransaction();
-
-            $user = User::findOrFail($id);
-            $user->delete();
-
-            Cache::forget('users');
-
-            DB::commit();
-
-
-
-            session()->flash('message', 'User berhasil dihapus');
-
-            return Inertia::location('/admin/user');
-        } catch (\Throwable $th) {
-            DB::rollback();
-            logger()->error('Error occurred while deleting user: ' . $th->getMessage());
-            return redirect()->back()->withErrors('error', 'User gagal dihapus');
-        }
+        //
     }
-    // public function destroy(string $slug)
-    // {
-    //     try {
-    //         DB::beginTransaction();
-
-    //         $lab = User::where('slug', $slug)->firstOrFail();
-    //         $lab->delete();
-
-    //         Cache::forget('labs');
-
-    //         DB::commit();
-    //         return redirect()->route('admin.labs')->with('success', 'Laboratorium berhasil dihapus');
-    //     } catch (\Throwable $th) {
-    //         DB::rollback();
-    //         logger()->error('Error occurred while deleting labs: ' . $th->getMessage());
-    //         return redirect()->back()->withErrors('error', 'Laboratorium gagal dihapus');
-    //     }
-    // }
 }

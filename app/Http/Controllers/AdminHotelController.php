@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
-class HotelController extends Controller
+class AdminHotelController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -74,7 +74,7 @@ class HotelController extends Controller
             
             session()->flash('message', 'Hotel berhasil ditambah');
             
-            // return Inertia::location('/admin/wisata');
+            return Inertia::location('/admin/wisata');
         } catch (\Throwable $th) {
             
             DB::rollback();

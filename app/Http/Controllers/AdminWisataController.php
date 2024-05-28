@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
-class WisataController extends Controller
+class AdminWisataController extends Controller
 {
     /**
      * Display a listing of the resource.

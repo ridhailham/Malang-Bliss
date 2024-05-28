@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { ChevronFirst, ChevronLast } from "lucide-react";
-import logo from "../assets/logo.png";
-import profile from "../assets/profile.png";
+
 
 const SidebarContext = createContext();
 
@@ -17,7 +16,7 @@ export default function Sidebar({ children }) {
             }
         };
 
-        handleResize(); // Set initial state based on current window size
+        handleResize();
         window.addEventListener("resize", handleResize);
 
         return () => window.removeEventListener("resize", handleResize);
@@ -26,7 +25,7 @@ export default function Sidebar({ children }) {
     return (
         <nav className="h-full flex flex-col bg-white border-r shadow-sm">
             <div className="p-4 pb-2 flex justify-between items-center">
-                <img src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" className={`overflow-hidden transition-all ${expanded ? "w-20" : "w-0"}`} />
+            <img className="h-12 w-auto" src="/assets/bliss.png" alt="Your Company" />
                 
                 <button onClick={() => setExpanded((curr) => !curr)} className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100">
                     {expanded ? <ChevronFirst /> : <ChevronLast />}
