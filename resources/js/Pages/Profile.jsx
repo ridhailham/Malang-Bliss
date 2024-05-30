@@ -9,7 +9,7 @@ const Profile = ({ user }) => {
 
     return (
         <>
-            <Navbar />
+            <Navbar user={user} />
             <div className="min-h-screen bg-gradient-to-b from-blue-900 to-blue-500 flex flex-col items-center justify-center">
                 <h1 className="text-white text-5xl font-semibold mb-6">{user.name}</h1>
 

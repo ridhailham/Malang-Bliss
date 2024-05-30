@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('wisatas', function (Blueprint $table) {
+        Schema::create('order_wisatas', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('image');
-            $table->string('lokasi');
+            // $table->enum('status', ['belum tervalidasi', 'sudah tervalidasi']);
+            $table->string('bukti_pembayaran');
             $table->string('kontak');
-            $table->string('instagram');
-            $table->text('deskripsi');
-            $table->integer('harga')->default(0);
+            $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('wisata_id')->constrained('wisatas')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('wisatas');
+        Schema::dropIfExists('order_wisatas');
     }
 };

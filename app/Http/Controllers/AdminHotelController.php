@@ -150,7 +150,7 @@ class AdminHotelController extends Controller
             
             DB::commit();
             
-            session()->flash('message', 'Hotel berhasil ditambah');
+            session()->flash('message', 'Hotel berhasil diedit');
             
             return Inertia::location('/admin/hotel');
         } catch (\Throwable $th) {

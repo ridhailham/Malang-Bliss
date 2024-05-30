@@ -38,6 +38,7 @@ class AdminWisataController extends Controller
      */
     public function store(Request $request)
     {
+        
         // Validasi request
         $request->validate([
             'name' => 'required|max:225',
@@ -45,17 +46,20 @@ class AdminWisataController extends Controller
             'lokasi' => 'required|max:255',
             'kontak' => 'required|max:50',
             'instagram' => 'required|max:50',
-            'deskripsi' => 'required|max:225',
+            'deskripsi' => 'required|max:400',
             'harga' => 'required'
 
         ]);
 
+        
         
 
         try {
             DB::beginTransaction();
 
             $wisata = new Wisata();
+
+            
             $wisata->name = $request->name;
             $wisata->lokasi = $request->lokasi;
             $wisata->kontak = $request->kontak;
@@ -66,17 +70,19 @@ class AdminWisataController extends Controller
             $wisata->image = $imageName;
             $wisata->save();
             
+            
             $request->file('image')->storeAs('wisata', $imageName, 'public');
             // Storage::disk('public')->put('wisata/' . $imageName, file_get_contents($request->wisata));
             
             
             Cache::forget('wisatas');
             
+            
             DB::commit();
             
             session()->flash('message', 'Wisata berhasil ditambah');
             
-            // return Inertia::location('/admin/wisata');
+            return Inertia::location('/admin/wisata');
         } catch (\Throwable $th) {
             
             DB::rollback();
@@ -118,7 +124,7 @@ class AdminWisataController extends Controller
             'lokasi' => 'required|max:255',
             'kontak' => 'required|max:50',
             'instagram' => 'required|max:50',
-            'deskripsi' => 'required|max:225',
+            'deskripsi' => 'required',
             'harga' => 'required'
         ]);
         
@@ -152,7 +158,7 @@ class AdminWisataController extends Controller
             
             DB::commit();
             
-            session()->flash('message', 'Wisata berhasil ditambah');
+            session()->flash('message', 'Wisata berhasil diedit');
             
             return Inertia::location('/admin/wisata');
         } catch (\Throwable $th) {

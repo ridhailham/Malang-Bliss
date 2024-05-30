@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('lokasi');
             $table->string('kontak');
             $table->string('instagram');
-            $table->string('deskripsi');
+            $table->text('deskripsi');
             $table->integer('harga')->default(0);
             $table->timestamps();
         });

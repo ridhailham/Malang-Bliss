@@ -6,30 +6,97 @@ use App\Models\Hotel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Exception;
 
 class HotelController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index() {
-        $user = Auth::user();
+    
 
-        $hotel = Hotel::orderBy('created_at', 'desc')->get();
-        
-        if ($user) {
+
+    public function index() {
+        try {
+            $user = Auth::user();
+            $hotel = Hotel::orderBy('id', 'desc')->get();
             
-            return Inertia::render('Hotel', [
-                'user' => $user,
-                'hotel' => $hotel,
-                
-            ]);
-        } else {
+            if ($user) {
+                return Inertia::render('Hotel', [
+                    'user' => $user,
+                    'hotel' => $hotel,
+                ]);
+            } else {
+                return Inertia::render('Hotel', [
+                    'hotel' => $hotel,
+                ]);
+            }
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Failed to fetch data'], 500);
+        }
+    }
+
+    public function ascHarga() {
+        try {
+            $user = Auth::user();
+            $hotel = Hotel::orderBy('harga', 'asc')->get();
             
-            return Inertia::render('Hotel', [
-                'hotel' => $hotel,
-                
-            ]);
+            if ($user) {
+                return Inertia::render('Hotel', [
+                    'user' => $user,
+                    'hotel' => $hotel,
+                ]);
+            } else {
+                return Inertia::render('Hotel', [
+                    'hotel' => $hotel,
+                ]);
+            }
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Failed to fetch data'], 500);
+        }
+    }
+
+    public function descHarga() {
+        try {
+            $user = Auth::user();
+            $hotel = Hotel::orderBy('harga', 'desc')->get();
+            
+            if ($user) {
+                return Inertia::render('Hotel', [
+                    'user' => $user,
+                    'hotel' => $hotel,
+                ]);
+            } else {
+                return Inertia::render('Hotel', [
+                    'hotel' => $hotel,
+                ]);
+            }
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Failed to fetch data'], 500);
+        }
+    }
+
+    public function filterHarga(Request $request) {
+        try {
+            $user = Auth::user();
+            $minPrice = $request->min_price;
+            $maxPrice = $request->max_price;
+            $hotel = Hotel::whereBetween('harga', [$minPrice, $maxPrice])->get();
+            
+            
+            if ($user) {
+                return Inertia::render('Hotel', [
+                    'user' => $user,
+                    'hotel' => $hotel,
+                ]);
+            } else {
+                return Inertia::render('Hotel', [
+                    'hotel' => $hotel,
+                ]);
+            }
+        } catch (Exception $e) {
+            
+            return response()->json(['error' => 'Failed to fetch data'], 500);
         }
     }
 
@@ -54,7 +121,12 @@ class HotelController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $hotel = Hotel::findOrFail($id);
+
+        return Inertia::render('DetailHotel', [
+            'id' => $id,
+            'hotel' => $hotel
+        ]);
     }
 
     /**

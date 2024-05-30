@@ -8,4 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class Hotel extends Model
 {
     use HasFactory;
+
+    protected $table = 'hotels';
+
+    
+    protected $fillable = [
+        'name',
+        'lokasi',
+        'kontak',
+        'instagram',
+        'harga',
+        'image',
+        'deskripsi',
+       
+    ];
+    
 }

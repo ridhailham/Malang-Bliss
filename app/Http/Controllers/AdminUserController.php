@@ -61,6 +61,8 @@ class AdminUserController extends Controller
 
             DB::commit();
 
+            
+
             return Inertia::location('/admin/user');
         } catch (\Throwable $th) {
             DB::rollback();
@@ -115,6 +117,8 @@ class AdminUserController extends Controller
             Cache::forget('users');
 
             DB::commit();
+
+            session()->flash('message', 'user berhasil diedit');
 
             return Inertia::location('/admin/user');
         } catch (\Throwable $th) {

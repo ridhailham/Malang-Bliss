@@ -29,9 +29,9 @@ const AdminLayout = ({ children }) => {
                     <Link href="/admin/hotel" className="no-underline" onClick={handleClick}>
                         <SidebarItem icon={<Layers size={20} />} text="Hotel" />
                     </Link>
-                    <Link href="/reporting" className="no-underline" onClick={handleClick}>
+                    {/* <Link href="/reporting" className="no-underline" onClick={handleClick}>
                         <SidebarItem icon={<Flag size={20} />} text="Reporting" />
-                    </Link>
+                    </Link> */}
                     <hr className="my-3" />
                     <Link href="/admin/reset" className="no-underline" onClick={handleClick}>
                         <SidebarItem icon={<Settings size={20} />} text="Settings" />

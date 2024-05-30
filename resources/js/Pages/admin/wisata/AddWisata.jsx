@@ -8,7 +8,7 @@ const AddWisata = () => {
     const [kontak, setKontak] = useState('');
     const [instagram, setInstagram] = useState('');
     const [deskripsi, setDeskripsi] = useState('');
-    const [harga, setHarga] = useState(0); // New state for price
+    const [harga, setHarga] = useState(0);
     const [image, setImage] = useState(null);
     const [loading, setLoading] = useState(false);
     const [submissionError, setSubmissionError] = useState(null);
@@ -22,21 +22,17 @@ const AddWisata = () => {
 
         const formData = new FormData();
         formData.append('name', name);
-        formData.append('image', image); 
         formData.append('lokasi', lokasi);
         formData.append('kontak', kontak);
         formData.append('instagram', instagram);
         formData.append('deskripsi', deskripsi);
-        formData.append('harga', harga); // Append price to FormData
-        console.log(formData);
+        formData.append('harga', harga);
+        formData.append('image', image);
+
+        
         Inertia.post('/admin/wisata/store', formData, {
-            onFinish: () => {
-                setLoading(false);
-                console.log("Finished submitting form")
-            },
-            onError: (error) => {
-                setSubmissionError('Data gagal ditambahkan. Silakan coba lagi.');
-            },
+            onFinish: () => setLoading(false),
+            onError: () => setSubmissionError('Data gagal ditambahkan. Silakan coba lagi.'),
         });
     };
 
@@ -130,7 +126,7 @@ const AddWisata = () => {
                                 <input
                                     type="number"
                                     value={harga}
-                                    onChange={(e) => setHarga(Math.max(0, parseInt(e.target.value)))}
+                                    onChange={(e) => setHarga(Math.max(0, parseInt(e.target.value, 10)))}
                                     placeholder="Masukkan harga"
                                     className="border border-gray-300 rounded p-2 w-full"
                                     min="0"

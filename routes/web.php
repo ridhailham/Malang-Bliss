@@ -9,6 +9,8 @@ use App\Http\Controllers\AdminWisataController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\OrderHotelController;
+use App\Http\Controllers\OrderWisataController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\User;
 use App\Http\Controllers\UserController;
@@ -20,18 +22,42 @@ use Inertia\Inertia;
 
 
 
+Route::fallback(function () {
+    return Inertia::render('Fallback')->toResponse(request());
+});
 
 
 Route::get('/', function () {
     return Redirect::to('/home');
 });
 
+
 Route::prefix('/')->group(function () {
     
     Route::get('/home', [HomeController::class, 'index'])->name('account.index');
+
+
     Route::get('/hotel', [HotelController::class, 'index']);
+    Route::get('/hotel/asc', [HotelController::class, 'ascHarga']);
+    Route::get('/hotel/desc', [HotelController::class, 'descHarga']);
+    Route::get('/hotel/{id}', [HotelController::class, 'show']);
+    Route::post('/hotel/filter', [HotelController::class, 'filterHarga']);
+
+    Route::get('/hotel/order/{id}', [OrderHotelController::class, 'bayar']);
+    Route::post('/hotel/order', [OrderHotelController::class, 'store']);
+    Route::get('/hotel/order/riwayat', [OrderHotelController::class, 'index']);
+    Route::get('/hotel/order/riwayat/{id}', [OrderHotelController::class, 'show']);
+
     Route::get('/destinasi', [WisataController::class, 'index']);
+    Route::get('/destinasi/asc', [WisataController::class, 'ascHarga']);
+    Route::get('/destinasi/desc', [WisataController::class, 'descHarga']);
+    Route::get('/destinasi/{id}', [WisataController::class, 'show']);
+    Route::post('/destinasi/filter', [WisataController::class, 'filterHarga']);
     
+    Route::get('/destinasi/order/{id}', [OrderWisataController::class, 'bayar']);
+    Route::post('/destinasi/order', [OrderWisataController::class, 'store']);
+    Route::get('/destinasi/order/riwayat', [OrderWisataController::class, 'index']);
+    Route::get('/destinasi/order/riwayat/{id}', [OrderWisataController::class, 'show']);
     Route::middleware('user.guest')->group(function () {
         
         
@@ -94,8 +120,8 @@ Route::prefix('/admin')->group(function () {
         Route::get('/reset', [AdminController::class, 'edit'])->name('admin.hotel.edit');
         Route::put('/reset/{id}', [AdminController::class, 'update'])->name('admin.reset');
     });
+    
 });
-
 
 
 

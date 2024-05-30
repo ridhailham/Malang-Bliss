@@ -1,13 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AdminLayout from '../Layouts/AdminLayout';
 import { Link } from '@inertiajs/react';
 import { Inertia } from '@inertiajs/inertia';
 import { usePage } from '@inertiajs/react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AllUser = ({ user }) => {
-
     const { flash } = usePage().props;
-    
+
+    useEffect(() => {
+        if (flash && flash.message) {
+            toast.success(flash.message);
+        }
+        if (flash && flash.error) {
+            toast.error(flash.error);
+        }
+    }, [flash]);
 
     const deleteData = (id, email) => {
         if (confirm(`Yakin menghapus data user dengan nama ${email} ?`)) {
@@ -23,16 +32,14 @@ const AllUser = ({ user }) => {
 
     return (
         <AdminLayout>
+            <ToastContainer />
             <div className="p-6 bg-gray-100 rounded-lg shadow-lg">
                 <h3 className="text-xl font-semibold mb-4">Data User</h3>
                 <hr className="mb-4" />
-                <Link as='button' type='button' href='/admin/user/create' className="bg-blue-500 text-white px-4 py-2 rounded mb-4 hover:bg-blue-700">
+                {/* <Link as='button' type='button' href='/admin/user/create' className="bg-blue-500 text-white px-4 py-2 rounded mb-4 hover:bg-blue-700">
                     Tambah User
-                </Link>
+                </Link> */}
 
-                {
-                    flash && flash.message && <div className='font-bold text-green-600 mb-10'>{flash.message}</div>
-                }
                 <div className="overflow-x-auto">
                     <table className="min-w-full bg-white rounded-lg shadow-md overflow-hidden">
                         <thead>
@@ -55,7 +62,7 @@ const AllUser = ({ user }) => {
                                         <td className="py-3 px-6 text-left font-bold">{u.name}</td>
                                         <td className="py-3 px-6 text-left font-bold">{u.email}</td>
                                         <td>
-                                        <Link href={`/admin/user/${u.id}`} className="bg-blue-500 text-white px-4 py-2 rounded mt-4 mb-2 hover:bg-blue-700">Edit</Link>
+                                            <Link href={`/admin/user/${u.id}`} className="bg-blue-500 text-white px-4 py-2 rounded mt-4 mb-2 hover:bg-blue-700">Edit</Link>
                                             <button className="bg-blue-500 text-white px-4 py-2 rounded ml-3 mt-4 mb-2 hover:bg-blue-700" onClick={() => deleteData(u.id, u.email)}>Hapus</button>
                                         </td>
                                     </tr>
@@ -71,5 +78,3 @@ const AllUser = ({ user }) => {
 }
 
 export default AllUser;
-
-

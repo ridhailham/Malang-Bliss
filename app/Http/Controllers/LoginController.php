@@ -23,11 +23,11 @@ class LoginController extends Controller
         try {
             if (Auth::attempt($credentials)) {
                 $request->session()->regenerate();
+                
                 return Inertia::location('/');
             } else {
-                return back()->withErrors([
-                    'email' => 'Email atau password salah.',
-                ])->onlyInput('email');
+                session()->flash('message', 'Email atau Password salah');
+                return Inertia::location('/login'); 
             }
         } catch (\Throwable $th) {
             // Log the error

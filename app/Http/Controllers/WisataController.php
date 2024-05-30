@@ -7,6 +7,7 @@ use App\Models\Wisata;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Exception;
 
 class WisataController extends Controller
 {
@@ -14,23 +15,86 @@ class WisataController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
-        $user = Auth::user();
+        try {
+            $user = Auth::user();
+            $wisata = Wisata::orderBy('id', 'desc')->get();
+            
+            if ($user) {
+                return Inertia::render('Wisata', [
+                    'user' => $user,
+                    'wisata' => $wisata,
+                ]);
+            } else {
+                return Inertia::render('Wisata', [
+                    'wisata' => $wisata,
+                ]);
+            }
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Failed to fetch data'], 500);
+        }
+    }
 
-        $wisata = Wisata::orderBy('created_at', 'desc')->get();
-        
-        if ($user) {
+    public function ascHarga() {
+        try {
+            $user = Auth::user();
+            $wisata = Wisata::orderBy('harga', 'asc')->get();
             
-            return Inertia::render('Wisata', [
-                'user' => $user,
-                'wisata' => $wisata,
-                
-            ]);
-        } else {
+            if ($user) {
+                return Inertia::render('Wisata', [
+                    'user' => $user,
+                    'wisata' => $wisata,
+                ]);
+            } else {
+                return Inertia::render('Wisata', [
+                    'wisata' => $wisata,
+                ]);
+            }
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Failed to fetch data'], 500);
+        }
+    }
+
+    public function descHarga() {
+        try {
+            $user = Auth::user();
+            $wisata = Wisata::orderBy('harga', 'desc')->get();
             
-            return Inertia::render('Wisata', [
-                'wisata' => $wisata,
-                
-            ]);
+            if ($user) {
+                return Inertia::render('Wisata', [
+                    'user' => $user,
+                    'wisata' => $wisata,
+                ]);
+            } else {
+                return Inertia::render('Wisata', [
+                    'wisata' => $wisata,
+                ]);
+            }
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Failed to fetch data'], 500);
+        }
+    }
+
+    public function filterHarga(Request $request) {
+        try {
+            $user = Auth::user();
+            $minPrice = $request->min_price;
+            $maxPrice = $request->max_price;
+            $wisata = Wisata::whereBetween('harga', [$minPrice, $maxPrice])->get();
+            
+            
+            if ($user) {
+                return Inertia::render('Wisata', [
+                    'user' => $user,
+                    'wisata' => $wisata,
+                ]);
+            } else {
+                return Inertia::render('Wisata', [
+                    'wisata' => $wisata,
+                ]);
+            }
+        } catch (Exception $e) {
+            
+            return response()->json(['error' => 'Failed to fetch data'], 500);
         }
     }
 
@@ -39,7 +103,11 @@ class WisataController extends Controller
      */
     public function create()
     {
-        //
+        try {
+            // Implement create logic
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Failed to create resource'], 500);
+        }
     }
 
     /**
@@ -47,7 +115,11 @@ class WisataController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            // Implement store logic
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Failed to store resource'], 500);
+        }
     }
 
     /**
@@ -55,15 +127,28 @@ class WisataController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $user = Auth::user();
+        $wisata = Wisata::findOrFail($id);
+
+
+        return Inertia::render('DetailWisata', [
+            'id' => $id,
+            'user' => $user,
+            'wisata' => $wisata,
+        ]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        //
+        try {
+            // Implement edit logic
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Failed to edit resource'], 500);
+        }
     }
 
     /**
@@ -71,7 +156,11 @@ class WisataController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            // Implement update logic
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Failed to update resource'], 500);
+        }
     }
 
     /**
@@ -79,6 +168,10 @@ class WisataController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            // Implement destroy logic
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Failed to delete resource'], 500);
+        }
     }
 }

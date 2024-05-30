@@ -7,9 +7,9 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [submissionError, setSubmissionError] = useState(null);
 
-  const { errors } = usePage().props;
+  
+  const { flash, errors } = usePage().props;
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -18,19 +18,16 @@ const Login = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     setLoading(true);
-    setSubmissionError(null);
 
     const user = { email, password };
     Inertia.post('/authenticate', user, {
       onFinish: () => {
         setLoading(false);
       },
-      onError: () => {
-        setSubmissionError('Login gagal. Silakan coba lagi.');
-      },
     });
   };
-
+  
+  
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -54,8 +51,12 @@ const Login = () => {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={handleLogin}>
-            {submissionError && <div style={{ color: 'red', fontStyle: 'italic' }}>{submissionError}</div>}
-            
+            {flash.message && (
+              <div className="font-bold text-red-600 mb-4">
+                {flash.message}
+              </div>
+            )}
+
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                 Email
@@ -101,7 +102,7 @@ const Login = () => {
                   {passwordVisible ? (
                     <svg className="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.522 5 12 5c4.478 0 8.268 2.943 9.542 7-.942 2.906-3.16 5.355-5.952 6.294M15 12a3 3 0 01-6 0m6 0a3 3 0 00-6 0m12-3h.01M4.22 4.22l15.56 15.56" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.522 5 12 5c4.478 0 8.268 2.943 9.542 7-.942 2.906-3.16 5.355-5.952 6.294M15 12a3 3 01-6 0m6 0a3 3 0 00-6 0m12-3h.01M4.22 4.22l15.56 15.56" />
                     </svg>
                   ) : (
                     <svg className="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">

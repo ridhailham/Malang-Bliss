@@ -50,8 +50,9 @@ class AdminController extends Controller
 
             DB::commit();
 
+            session()->flash('message', 'Berhasil Reset Password Admin');
             
-            return Inertia::location('/admin/dashboard');
+            return Inertia::location('/admin/home');
         } catch (\Throwable $th) {
             DB::rollback();
             logger()->error('Error occurred while updating user: ' . $th->getMessage());

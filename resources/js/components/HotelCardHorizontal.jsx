@@ -14,20 +14,20 @@ const HotelCardHorizontal = ({ hotel }) => {
             style={{ width: '400px', height: '350px', overflow: 'hidden' }} // fixed size for the card
           >
             {/* Use Link component instead of <a> tag */}
-            <Link to={`/hotel/${item.id}`}>
+            <Link href={`/hotel/${item.id}`}>
               <img
                 className="rounded-t-lg object-cover"
-                src={item.image}
+                src={`/storage/wisata/${item.image}`}
                 alt={item.nama}
                 style={{ width: '100%', height: '200px' }} // fixed size for the image
               />
             </Link>
             <div className="p-5">
-              <a href="#">
+            <Link href={`/hotel/${item.id}`}>
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white overflow-hidden text-ellipsis whitespace-nowrap">
                   {item.name}
                 </h5>
-              </a>
+              </Link>
               <p className="flex gap-2 pt-1 mb-3 font-normal text-gray-700 dark:text-gray-400">
                 <FaLocationDot /> {item.lokasi}
               </p>

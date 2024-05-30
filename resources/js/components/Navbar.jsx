@@ -87,7 +87,7 @@ export default function Navbar({ user }) {
                     <div className="mt-6 flow-root">
                         <div className="-my-6 divide-y divide-gray-500/10">
                             <div className="py-6">
-                                <Link href="/tourism" className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 hover:text-orange-400">
+                                <Link href="/destinasi" className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 hover:text-orange-400">
                                     Tourism
                                 </Link>
                                 <Link href="/hotel" className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 hover:text-orange-400">
