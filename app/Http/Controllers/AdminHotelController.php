@@ -74,7 +74,7 @@ class AdminHotelController extends Controller
             
             session()->flash('message', 'Hotel berhasil ditambah');
             
-            return Inertia::location('/admin/wisata');
+            return Inertia::location('/admin/hotel');
         } catch (\Throwable $th) {
             
             DB::rollback();

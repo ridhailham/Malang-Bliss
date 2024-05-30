@@ -3,6 +3,7 @@ import { FaLocationDot } from 'react-icons/fa6';
 import { Link } from '@inertiajs/react'; // Import Link from react-router-dom
 
 const WisataCardHorizontal = ({ wisata }) => {
+    console.log(wisata);
     return (
         <>
 

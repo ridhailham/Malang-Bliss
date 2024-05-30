@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from '../components/Navbar';
 import { FaPencilAlt, FaKey } from "react-icons/fa";
 import { IoTicketOutline } from "react-icons/io5";
+import { FaHotel } from "react-icons/fa"
 import { Link } from '@inertiajs/react';
 
 const Profile = ({ user }) => {
@@ -27,12 +28,19 @@ const Profile = ({ user }) => {
                             <p className='m-3 text-2xl'>Ganti Password</p>
                         </li>
                     </Link>
-                    <Link href={`/riwayatorder/${user.id}`}>
-                    <li className="flex items-center">
-                        <IoTicketOutline size={27} />
-                        <p className='m-3 text-2xl'>Riwayat Pemesanan</p>
-                    </li>
+                    {/* <Link href={`/riwayatorder/${user.id}`}>
+                        <li className="flex items-center">
+                            <IoTicketOutline size={27} />
+                            <p className='m-3 text-2xl'>Riwayat Pemesanan Destinasi</p>
+                        </li>
                     </Link>
+                    <Link href={`/riwayatorder/${user.id}`}>
+                        <li className="flex items-center">
+                            <FaHotel size={27} />
+
+                            <p className='m-3 text-2xl'>Riwayat Pemesanan Hotel</p>
+                        </li>
+                    </Link> */}
                 </ul>
 
             </div>

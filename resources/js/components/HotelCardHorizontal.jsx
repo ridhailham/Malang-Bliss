@@ -17,7 +17,7 @@ const HotelCardHorizontal = ({ hotel }) => {
             <Link href={`/hotel/${item.id}`}>
               <img
                 className="rounded-t-lg object-cover"
-                src={`/storage/wisata/${item.image}`}
+                src={`/storage/hotel/${item.image}`}
                 alt={item.nama}
                 style={{ width: '100%', height: '200px' }} // fixed size for the image
               />

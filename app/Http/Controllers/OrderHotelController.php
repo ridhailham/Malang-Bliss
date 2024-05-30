@@ -23,7 +23,7 @@ class OrderHotelController extends Controller
             ->where('user_id', $user->id)
             ->get();
 
-        dd($hotel);
+        
 
         return Inertia::render('OrderHotel', [
             'user' => $user,
@@ -109,12 +109,14 @@ class OrderHotelController extends Controller
     public function show(string $id)
     {
         // $hotel = OrderHotel::findOrFail($id);
+        $user = Auth::user();
         $hotel = OrderHotel::with(['hotel', 'user'])->findOrFail($id);
 
         
-        return Inertia::render('DetailHotel', [
+        return Inertia::render('DetailRiwayatOrderHotel', [
             'id' => $id,
-            'hotel' => $hotel
+            'hotel' => $hotel,
+            'user' => $user
         ]);
     }
 

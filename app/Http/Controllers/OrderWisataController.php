@@ -18,7 +18,18 @@ class OrderWisataController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        $wisata = OrderWisata::with('wisata')
+            ->where('user_id', $user->id)
+            ->get();
+
+        
+
+        return Inertia::render('OrderWisata', [
+            'user' => $user,
+            'orderWisata' => $wisata,
+
+        ]);
     }
 
     public function bayar(Request $request, string $id)
@@ -79,7 +90,7 @@ class OrderWisataController extends Controller
             DB::commit();
 
 
-            return Inertia::location('/home');
+            return Inertia::location('/destinasi/order/riwayat/'.$orderWisata->id);
         } catch (\Throwable $th) {
             dd($th);
             DB::rollback();
@@ -93,7 +104,16 @@ class OrderWisataController extends Controller
      */
     public function show(string $id)
     {
-        //
+        // $hotel = OrderHotel::findOrFail($id);
+        $user = Auth::user();
+        $wisata = OrderWisata::with(['wisata', 'user'])->findOrFail($id);
+
+        
+        return Inertia::render('DetailRiwayatOrderWisata', [
+            'id' => $id,
+            'wisata' => $wisata,
+            'user' => $user
+        ]);
     }
 
     /**
